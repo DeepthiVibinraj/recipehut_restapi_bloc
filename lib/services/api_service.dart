@@ -34,7 +34,7 @@ class ApiService {
       final json = jsonDecode(res.body);
       return RecipeModel.fromJson(json['recipes'][0]);
     }
-    throw Exception('Failed to load recipe');
+    throw Exception('Failed to load recipes');
   }
 
   Future<List<RecipeModel>> fetchPopularRecipes({int count = 10}) async {
