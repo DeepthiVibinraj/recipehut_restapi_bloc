@@ -21,14 +21,14 @@
 //   }
 // }
 import 'package:http/http.dart' as http;
+import 'package:recipehut/core/constants/api_constants.dart';
 import 'dart:convert';
-import '../models/recipe_model.dart';
+import '../data/models/recipe_model.dart';
 
 class ApiService {
-  String apiKey = 'c862ca137b194bbd8a613e42be38fa84';
-  String baseUrl = 'https://api.spoonacular.com';
   Future<RecipeModel> fetchRecipeOfTheDay() async {
-    final url = Uri.parse('$baseUrl/recipes/random?number=1&apiKey=$apiKey');
+    final url =
+        Uri.parse('$spoonacularBaseUrl/recipes/random?number=1&apiKey=$apiKey');
     final res = await http.get(url);
     if (res.statusCode == 200) {
       final json = jsonDecode(res.body);
@@ -38,8 +38,8 @@ class ApiService {
   }
 
   Future<List<RecipeModel>> fetchPopularRecipes({int count = 10}) async {
-    final url =
-        Uri.parse('$baseUrl/recipes/random?number=$count&apiKey=$apiKey');
+    final url = Uri.parse(
+        '$spoonacularBaseUrl/recipes/random?number=$count&apiKey=$apiKey');
     final res = await http.get(url);
     if (res.statusCode == 200) {
       final json = jsonDecode(res.body);

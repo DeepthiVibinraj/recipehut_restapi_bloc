@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/recipe_model.dart';
+import '../data/models/recipe_model.dart';
 
 // class RecipeCard extends StatelessWidget {
 //   final RecipeModel recipe;
@@ -57,10 +57,16 @@ class RecipeCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: Image.network(recipe.image,
-                height: 180, width: double.infinity, fit: BoxFit.cover),
+          Expanded(
+            child: ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(12)),
+              child: Image.network(
+                recipe.image,
+                height: 140, // a bit shorter looks nicer, adjust as you like
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),
