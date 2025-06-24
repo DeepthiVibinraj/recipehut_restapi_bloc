@@ -15,7 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final user = await authRepo.login(event.email, event.password);
         await storage.saveToken(user.token);
-        emit(AuthSuccess(user.token));
+        emit(AuthSuccess(user));
       } catch (e) {
         emit(AuthFailure(e.toString()));
       }
@@ -23,10 +23,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignupRequested>((event, emit) async {
       emit(AuthLoading());
       try {
-        await authRepo.signup(event.email, event.password);
+        await authRepo.signup(event.userName, event.email, event.password);
+
         final user = await authRepo.login(event.email, event.password);
         await storage.saveToken(user.token);
-        emit(AuthSuccess(user.token));
+        emit(AuthSuccess(user));
       } catch (e) {
         emit(AuthFailure(e.toString()));
       }

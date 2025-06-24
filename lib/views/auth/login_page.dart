@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipehut/view_models/bloc/auth/auth_bloc.dart';
 import 'package:recipehut/view_models/bloc/auth/auth_event.dart';
 import 'package:recipehut/view_models/bloc/auth/auth_state.dart';
+import 'package:recipehut/view_models/bloc/home/home_bloc.dart';
+import 'package:recipehut/view_models/bloc/home/home_event.dart';
+import 'package:recipehut/views/home/home_page.dart';
 
 class LoginPage extends StatelessWidget {
   final emailCtrl = TextEditingController();
@@ -15,7 +18,15 @@ class LoginPage extends StatelessWidget {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
-            Navigator.pushReplacementNamed(context, '/home');
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) {
+                  context.read<HomeBloc>().add(FetchAllRecipes());
+                  return HomePage(user: state.user); // pass user
+                },
+              ),
+            );
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.message)));

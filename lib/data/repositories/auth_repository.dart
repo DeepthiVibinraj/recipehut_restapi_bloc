@@ -17,11 +17,15 @@ class AuthRepository {
     }
   }
 
-  Future<void> signup(String email, String password) async {
+  Future<void> signup(String userName, String email, String password) async {
     final response = await http.post(
       Uri.parse('$baseUrl/signup'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': email, 'password': password}),
+      body: jsonEncode({
+        'userName': userName,
+        'email': email,
+        'password': password,
+      }),
     );
     if (response.statusCode != 201) {
       throw Exception(jsonDecode(response.body)['message']);

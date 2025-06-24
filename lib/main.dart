@@ -73,6 +73,7 @@ class MyApp extends StatelessWidget {
   final AuthRepository authRepo = AuthRepository();
   final StorageService storage = StorageService();
   final apiService = ApiService();
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -90,10 +91,6 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => LoginPage(),
-          '/home': (context) {
-            context.read<HomeBloc>().add(FetchAllRecipes());
-            return HomePage();
-          },
           '/signup': (context) => SignupPage(),
         },
       ),

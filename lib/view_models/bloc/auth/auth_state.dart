@@ -1,3 +1,5 @@
+import 'package:recipehut/data/models/user_model.dart';
+
 abstract class AuthState {}
 
 class AuthInitial extends AuthState {}
@@ -5,8 +7,8 @@ class AuthInitial extends AuthState {}
 class AuthLoading extends AuthState {}
 
 class AuthSuccess extends AuthState {
-  final String token;
-  AuthSuccess(this.token);
+  final UserModel user;
+  AuthSuccess(this.user);
 }
 
 class AuthFailure extends AuthState {

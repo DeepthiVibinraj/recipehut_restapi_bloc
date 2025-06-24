@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipehut/core/constants/categories.dart';
+import 'package:recipehut/data/models/user_model.dart';
 import 'package:recipehut/view_models/bloc/home/home_bloc.dart';
 import 'package:recipehut/view_models/bloc/home/home_state.dart';
 import 'package:recipehut/widgets/category_tile.dart';
 import 'package:recipehut/widgets/recipe_card.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final UserModel user;
+  const HomePage({super.key, required this.user});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,8 +50,10 @@ class HomePage extends StatelessWidget {
                                       : 'Good Evening',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            Text('Amritha Balan',
+                            Text(user.userName,
                                 style: Theme.of(context).textTheme.titleLarge!)
+                            // Text('Amritha Balan',
+                            //     style: Theme.of(context).textTheme.titleLarge!)
                           ],
                         ),
                         CircleAvatar(

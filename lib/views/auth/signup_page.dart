@@ -3,8 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipehut/view_models/bloc/auth/auth_bloc.dart';
 import 'package:recipehut/view_models/bloc/auth/auth_event.dart';
 import 'package:recipehut/view_models/bloc/auth/auth_state.dart';
+import 'package:recipehut/view_models/bloc/home/home_bloc.dart';
+import 'package:recipehut/view_models/bloc/home/home_event.dart';
+import 'package:recipehut/views/home/home_page.dart';
 
 class SignupPage extends StatelessWidget {
+  final nameCtrl = TextEditingController();
+
   final emailCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
 
@@ -15,7 +20,15 @@ class SignupPage extends StatelessWidget {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
-            Navigator.pushReplacementNamed(context, '/home');
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) {
+                  context.read<HomeBloc>().add(FetchAllRecipes());
+                  return HomePage(user: state.user); // pass user
+                },
+              ),
+            );
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
@@ -27,6 +40,10 @@ class SignupPage extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
+                TextField(
+                  controller: nameCtrl,
+                  decoration: InputDecoration(labelText: 'UserName'),
+                ),
                 TextField(
                   controller: emailCtrl,
                   decoration: InputDecoration(labelText: 'Email'),
@@ -41,6 +58,7 @@ class SignupPage extends StatelessWidget {
                   onPressed: () {
                     context.read<AuthBloc>().add(
                           SignupRequested(
+                            nameCtrl.text.trim(),
                             emailCtrl.text.trim(),
                             passwordCtrl.text.trim(),
                           ),
